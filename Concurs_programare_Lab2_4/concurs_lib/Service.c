@@ -22,15 +22,17 @@ void add_participant_in_service(struct ServiceConcurs* srv, char* surname, char*
 	 * Se creeaza un participant cu numele, prenumele si scorul dat ca parametru, se valideaza participantul, daca este valid,
 	 * se adauga in repo-ul din srv, daca nu este valid, se afiseaza un mesaj de eroare
 	 */
-	struct Participant* p = (struct Participant*)malloc(sizeof(struct Participant));
-	strcpy(p->first_name, first_name);
-	strcpy(p->surname, surname);
-	p->score = score;
+	struct Participant* p = create_participant(surname, first_name, score);
+	if (!p) {
+		printf("Error: memory allocation failed\n");
+		return;
+	}
 
-	int err = validate_participant(p);
-	if (err == 0) {
+
+	enum ValidationCodes err = validate_participant(p);
+	if (err != V_OK) {
 		printf("Error: invalid participant (cod %d)\n", err);
-		free(p);
+		destroy_participant(p);
 		return;
 	}
 	add_participant(&(srv->repo), p);
@@ -41,15 +43,16 @@ void change_participant_in_service(struct ServiceConcurs* srv, char* surname, ch
 	 * Se creeaza un participant cu numele, prenumele si scorul dat ca parametru, se valideaza participantul, daca este valid,
 	 * se cauta participantul cu acelasi nume si prenume in repo-ul din
 	 */
-	struct Participant* p = (struct Participant*)malloc(sizeof(struct Participant));
-	strcpy(p->first_name, first_name);
-	strcpy(p->surname, surname);
-	p->score = score;
+	struct Participant* p = create_participant(surname, first_name, score);
+	if (!p) {
+		printf("Error: memory allocation failed\n");
+		return;
+	}
 
-	int err = validate_participant(p);
-	if (err == 0) {
+	enum ValidationCodes err = validate_participant(p);
+	if (err != V_OK) {
 		printf("Error: invalid participant (cod %d)\n", err);
-		free(p);
+		destroy_participant(p);
 		return;
 	}
 	change_participant(&(srv->repo), p);
@@ -61,19 +64,22 @@ void delete_participant_in_service(struct ServiceConcurs* srv, char* surname, ch
 	 * se cauta participantul cu acelasi nume si prenume in repo-ul din srv, daca se gaseste, se sterge din repo,
 	 * daca nu se gaseste, se afiseaza un mesaj de eroare
 	 */
-	struct Participant* p = (struct Participant*)malloc(sizeof(struct Participant));
-	strcpy(p->first_name, first_name);
-	strcpy(p->surname, surname);
-	p->score = score;
+	struct Participant* p = create_participant(surname, first_name, score);
+	if (!p) {
+		printf("Error: memory allocation failed\n");
+		return;
+	}
 
-	int err = validate_participant(p);
-	if (err == 0) {
+
+	enum ValidationCodes err = validate_participant(p);
+	if (err != V_OK) {
 		printf("Error: invalid participant (cod %d)\n", err);
-		free(p);
+		destroy_participant(p);
 		return;
 	}
 
 	delete_participant(&(srv->repo), p);
+	destroy_participant(p);
 }
 void filter_participants_by_score(struct ServiceConcurs* srv, int max_score) {
 	/*

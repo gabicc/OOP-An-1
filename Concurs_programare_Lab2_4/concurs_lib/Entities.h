@@ -3,8 +3,12 @@
 
 struct Participant
 {
-	char surname[20];
-	char first_name[20];
+	char *surname;
+	char *first_name;
 	int score;
 };
+
+struct Participant* create_participant(char* surname, char* first_name, int score);
+struct Participant* clone_participant(struct Participant* p);
+void destroy_participant(struct Participant* p);
 #endif

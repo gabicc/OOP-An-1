@@ -2,6 +2,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+struct RepoParticipanti* clone_repo(struct RepoParticipanti* r) {
+    struct RepoParticipanti* clone = malloc(sizeof(struct RepoParticipanti));
+    clone->n = r->n;
+    clone->capacity = r->capacity;
+    clone->arr = malloc(r->capacity * sizeof(struct Participant*));
+    for (int i = 0; i < clone->n; i++) {
+        //TODO clone here even the participants
+
+        clone->arr[i] = clone_participant(r->arr[i]);
+    }
+    return clone;
+}
+
 void init_repo(struct RepoParticipanti* r) {
     /*
      * n - lungime r
@@ -14,9 +27,12 @@ void init_repo(struct RepoParticipanti* r) {
 }
 
 void destroy_repo(struct RepoParticipanti* r) {
-    for (int i = 0; i < r->capacity; i++)
-        free(r->arr[i]);
+    for (int i = 0; i < r->n; i++)
+        destroy_participant(r->arr[i]);
     free(r->arr);
+    r->n = 0;
+    r->capacity = 0;
+    r->arr = NULL;
 }
 
 static void ensure_capacity(struct RepoParticipanti* r) {
@@ -46,7 +62,7 @@ void change_participant(struct RepoParticipanti* r, struct Participant* p) {
         if (strcmp(r->arr[i]->surname, p->surname) == 0 &&
             strcmp(r->arr[i]->first_name, p->first_name) == 0) {
 
-            free(r->arr[i]);
+            destroy_participant(r->arr[i]);
             r->arr[i] = p;
             return;
         }
@@ -59,9 +75,10 @@ void delete_participant(struct RepoParticipanti* r, struct Participant* p) {
      */
     for (int i = 0; i < r->n; i++) {
         if (strcmp(r->arr[i]->surname, p->surname) == 0 &&
-            strcmp(r->arr[i]->first_name, p->first_name) == 0) {
+            strcmp(r->arr[i]->first_name, p->first_name) == 0 &&
+            r->arr[i]->score == p->score) {
 
-            free(r->arr[i]);
+            destroy_participant(r->arr[i]);
 
             for (int j = i + 1; j < r->n; j++)
                 r->arr[j - 1] = r->arr[j];

@@ -4,7 +4,15 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-int validate_participant(struct Participant* p);
+
+enum ValidationCodes {
+    V_OK = 0,
+    V_INVALID_SURNAME = 1,
+    V_INVALID_FIRST_NAME = 2,
+    V_INVALID_SCORE = 3
+};
+
+enum ValidationCodes validate_participant(struct Participant* p);
 
 
 #ifdef __cplusplus

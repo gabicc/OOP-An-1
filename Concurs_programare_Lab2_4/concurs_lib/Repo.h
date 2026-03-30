@@ -16,6 +16,8 @@ extern "C" {
  * r - element de tip RepoParicipanti cu n, capacity si array de participanti
  * p - Participant
  */
+
+struct RepoParticipanti* clone_repo(struct RepoParticipanti* r);
 void init_repo(struct RepoParticipanti* r);
 void destroy_repo(struct RepoParticipanti* r);
 
