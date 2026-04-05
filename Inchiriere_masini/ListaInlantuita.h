@@ -13,10 +13,10 @@ private:
 public:
     Node(T valoare, Node* urm): val(valoare), next(urm){}
     virtual ~Node(){}
-    T getVal() {
+    T getVal() const {
         return this->val;
     }
-    Node* getNext() {
+    Node* getNext() const {
         return this->next;
     }
 
@@ -98,14 +98,14 @@ public:
         }
     }
 
-    int getLung() {
+    int getLung() const {
         return this->lung;
     }
 
-    Node<TT>* getHead() {
+    Node<TT>* getHead() const {
         return head;
     }
-    bool find(const TT& m) {
+    bool find(const TT& m) const {
         Node<TT>* curent = head;
         while (curent != NULL) {
             if (curent->getVal() == m) {

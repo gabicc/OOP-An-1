@@ -20,6 +20,7 @@ public:
     void stergeMasina(const string& nrInmatric);
     void modificaMasina(const string& nrInamtriculare_vechi, const string& nrInamtriculare_nou);
     void afis_Masini();
+    vector<Masina> get_all() const;
 };
 
 #endif //INCHIRIERE_MASINI_REPOMASINI_H

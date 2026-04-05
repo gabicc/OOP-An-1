@@ -4,6 +4,7 @@
 
 #include "Console.h"
 #include <iostream>
+#include <vector>
 #include "Service.h"
 using namespace std;
 
@@ -12,7 +13,18 @@ void print_menu() {
     cout << "2. Sterge masina\n";
     cout << "3. Modifica masina\n";
     cout << "4. Afiseaza toate masinile\n";
+    cout << "5. Filtreaza dupa producator\n";
+    cout << "6. Filtreaza dupa tip\n";
+    cout << "7. Sorteaza dupa nrInmatriculare\n";
+    cout << "8. Sorteaza dupa tip\n";
+    cout << "9. Sorteaza dupa producator + model\n";
     cout << "0. Iesire\n";
+}
+
+void afiseaza_lista_masini(const vector<Masina>& masini) {
+    for (const auto& masina : masini) {
+        masina.afis();
+    }
 }
 void adauga_masina_consola(Service srv) {
     string nrInmatric, producator, model, tip;
@@ -60,6 +72,32 @@ void afis_masini_consola(Service srv) {
     srv.afis_Masini_srv();
 }
 
+void filtreaza_dupa_producator_consola(Service srv) {
+    string producator;
+    cout << "Introdu producator: ";
+    cin >> producator;
+    afiseaza_lista_masini(srv.filtreaza_dupa_producator_srv(producator));
+}
+
+void filtreaza_dupa_tip_consola(Service srv) {
+    string tip;
+    cout << "Introdu tip: ";
+    cin >> tip;
+    afiseaza_lista_masini(srv.filtreaza_dupa_tip_srv(tip));
+}
+
+void sorteaza_dupa_nr_inmatriculare_consola(Service srv) {
+    afiseaza_lista_masini(srv.sorteaza_dupa_nr_inmatriculare_srv());
+}
+
+void sorteaza_dupa_tip_consola(Service srv) {
+    afiseaza_lista_masini(srv.sorteaza_dupa_tip_srv());
+}
+
+void sorteaza_dupa_producator_model_consola(Service srv) {
+    afiseaza_lista_masini(srv.sorteaza_dupa_producator_model_srv());
+}
+
 void run_console() {
     RepoMasini repo;
     Service srv(repo);
@@ -80,6 +118,21 @@ void run_console() {
                 break;
             case 4:
                 afis_masini_consola(srv);
+                break;
+            case 5:
+                filtreaza_dupa_producator_consola(srv);
+                break;
+            case 6:
+                filtreaza_dupa_tip_consola(srv);
+                break;
+            case 7:
+                sorteaza_dupa_nr_inmatriculare_consola(srv);
+                break;
+            case 8:
+                sorteaza_dupa_tip_consola(srv);
+                break;
+            case 9:
+                sorteaza_dupa_producator_model_consola(srv);
                 break;
             case 0:
                 //cout << "La revedere!\n";

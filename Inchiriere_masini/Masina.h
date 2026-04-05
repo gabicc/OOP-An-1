@@ -5,8 +5,6 @@
 
 using namespace std;
 
-
-
 class Masina {
 private:
     string nrInmatriculare;
@@ -17,21 +15,23 @@ public:
     Masina(const string& nrInmatriculare, const string& producator, const string& model, const string& tip);
     Masina(const Masina& other);
     ~Masina();
+
     void change_nrInmatriculare(const string& nrInmatriculare);
     const string& get_nr_inmatriculare() const;
-    const string& get_producator() const{
+    const string& get_producator() const {
         return producator;
     }
-    const string& get_model() const{
+    const string& get_model() const {
         return model;
     }
-    const string& get_tip() const{
+    const string& get_tip() const {
         return tip;
     }
-    void afis();
+
+    void afis() const;
     Masina& operator=(const Masina& other);
     Masina& operator=(const char* other);
-    bool operator==(const Masina& other);
+    bool operator==(const Masina& other) const;
 };
 
 #endif //INCHIRIERE_MASINI_MASINA_H

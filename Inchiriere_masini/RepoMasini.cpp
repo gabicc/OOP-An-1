@@ -60,4 +60,14 @@ void RepoMasini::afis_Masini() {
     }
 }
 
+vector<Masina> RepoMasini::get_all() const {
+    vector<Masina> all;
+    Node<Masina>* curent = masini.getHead();
+    while (curent != NULL) {
+        all.push_back(curent->getVal());
+        curent = curent->getNext();
+    }
+    return all;
+}
+
 

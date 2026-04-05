@@ -30,7 +30,7 @@ const string& Masina::get_nr_inmatriculare() const{
     return this->nrInmatriculare;
 }
 
-void Masina::afis() {
+void Masina::afis() const {
     cout << "Masina[ nrInmatriculare: " << nrInmatriculare << ", producator: " << producator
     << ", model: " << model << ", tip: " << tip << "]\n";
 
@@ -49,6 +49,6 @@ Masina& Masina::operator=(const char* other) {
     return *this;
 }
 
-bool Masina::operator==(const Masina& other) {
+bool Masina::operator==(const Masina& other) const {
     return this->get_nr_inmatriculare() == other.nrInmatriculare;
 }

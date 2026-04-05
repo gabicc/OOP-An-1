@@ -8,6 +8,7 @@
 #include "RepoMasini.h"
 #include <iostream>
 #include <assert.h>
+#include <vector>
 
 using namespace std;
 
@@ -115,6 +116,79 @@ void test_service_modifica_nonexistent() {
 
 }
 
+void test_service_filtrare_dupa_producator() {
+    RepoMasini repo;
+    Service srv(repo);
+    srv.adaugaMasina_srv(Masina("CJ10AAA", "Audi", "A4", "Sedan"));
+    srv.adaugaMasina_srv(Masina("CJ11BBB", "BMW", "X3", "SUV"));
+    srv.adaugaMasina_srv(Masina("CJ12CCC", "Audi", "Q7", "SUV"));
+
+    const vector<Masina> rezultat = srv.filtreaza_dupa_producator_srv("Audi");
+    assert(rezultat.size() == 2);
+    assert(rezultat[0].get_producator() == "Audi");
+    assert(rezultat[1].get_producator() == "Audi");
+}
+
+void test_service_filtrare_dupa_tip() {
+    RepoMasini repo;
+    Service srv(repo);
+    srv.adaugaMasina_srv(Masina("CJ10AAA", "Audi", "A4", "Sedan"));
+    srv.adaugaMasina_srv(Masina("CJ11BBB", "BMW", "X3", "SUV"));
+    srv.adaugaMasina_srv(Masina("CJ12CCC", "Audi", "Q7", "SUV"));
+
+    const vector<Masina> rezultat = srv.filtreaza_dupa_tip_srv("SUV");
+    assert(rezultat.size() == 2);
+    assert(rezultat[0].get_tip() == "SUV");
+    assert(rezultat[1].get_tip() == "SUV");
+}
+
+void test_service_sortare_dupa_nr_inmatriculare() {
+    RepoMasini repo;
+    Service srv(repo);
+    srv.adaugaMasina_srv(Masina("CJ30ZZZ", "VW", "Golf", "Hatchback"));
+    srv.adaugaMasina_srv(Masina("CJ10AAA", "Audi", "A4", "Sedan"));
+    srv.adaugaMasina_srv(Masina("CJ20MMM", "BMW", "X3", "SUV"));
+
+    const vector<Masina> rezultat = srv.sorteaza_dupa_nr_inmatriculare_srv();
+    assert(rezultat.size() == 3);
+    assert(rezultat[0].get_nr_inmatriculare() == "CJ10AAA");
+    assert(rezultat[1].get_nr_inmatriculare() == "CJ20MMM");
+    assert(rezultat[2].get_nr_inmatriculare() == "CJ30ZZZ");
+}
+
+void test_service_sortare_dupa_tip() {
+    RepoMasini repo;
+    Service srv(repo);
+    srv.adaugaMasina_srv(Masina("CJ30ZZZ", "VW", "Golf", "SUV"));
+    srv.adaugaMasina_srv(Masina("CJ10AAA", "Audi", "A4", "Sedan"));
+    srv.adaugaMasina_srv(Masina("CJ20MMM", "BMW", "X3", "SUV"));
+
+    const vector<Masina> rezultat = srv.sorteaza_dupa_tip_srv();
+    assert(rezultat.size() == 3);
+    assert(rezultat[0].get_tip() == "SUV");
+    assert(rezultat[0].get_nr_inmatriculare() == "CJ20MMM");
+    assert(rezultat[1].get_tip() == "SUV");
+    assert(rezultat[1].get_nr_inmatriculare() == "CJ30ZZZ");
+    assert(rezultat[2].get_tip() == "Sedan");
+}
+
+void test_service_sortare_dupa_producator_model() {
+    RepoMasini repo;
+    Service srv(repo);
+    srv.adaugaMasina_srv(Masina("CJ30ZZZ", "BMW", "X5", "SUV"));
+    srv.adaugaMasina_srv(Masina("CJ10AAA", "Audi", "A4", "Sedan"));
+    srv.adaugaMasina_srv(Masina("CJ20MMM", "BMW", "X3", "SUV"));
+
+    const vector<Masina> rezultat = srv.sorteaza_dupa_producator_model_srv();
+    assert(rezultat.size() == 3);
+    assert(rezultat[0].get_producator() == "Audi");
+    assert(rezultat[0].get_model() == "A4");
+    assert(rezultat[1].get_producator() == "BMW");
+    assert(rezultat[1].get_model() == "X3");
+    assert(rezultat[2].get_producator() == "BMW");
+    assert(rezultat[2].get_model() == "X5");
+}
+
 void test_constructor_copiere() {
     Masina a("CJ19DGC", "Hyundai", "Tucson", "Diesel");
     Masina b(a);
@@ -145,4 +219,9 @@ void test_masina_serviciu_all() {
     test_service_sterge_nonexistent();
     test_service_modifica_existing();
     test_service_modifica_nonexistent();
+    test_service_filtrare_dupa_producator();
+    test_service_filtrare_dupa_tip();
+    test_service_sortare_dupa_nr_inmatriculare();
+    test_service_sortare_dupa_tip();
+    test_service_sortare_dupa_producator_model();
 }
