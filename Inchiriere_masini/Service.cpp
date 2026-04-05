@@ -3,6 +3,7 @@
 //
 
 #include "Service.h"
+#include "Validator.h"
 
 Service::Service(RepoMasini& repo):repo(repo) {
 }
@@ -10,6 +11,7 @@ Service::~Service() {
 
 }
 void Service::adaugaMasina_srv(const Masina& m) {
+    validator.validate_masina(m);
     repo.adaugaMasina(m);
 }
 void Service::stergeMasina_srv(const string& nrInmatric) {
@@ -20,4 +22,8 @@ void Service::modificaMasina_srv(const string& nrInamtriculare_vechi, const stri
 }
 void Service::afis_Masini_srv() {
     repo.afis_Masini();
+}
+
+int Service::nr_masini() {
+    return repo.masini.getLung();
 }

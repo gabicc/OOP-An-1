@@ -10,7 +10,7 @@ using namespace std;
 void print_menu() {
     cout << "1. Adauga masina\n";
     cout << "2. Sterge masina\n";
-    cout << "3. Cauta masina\n";
+    cout << "3. Modifica masina\n";
     cout << "4. Afiseaza toate masinile\n";
     cout << "0. Iesire\n";
 }
@@ -25,7 +25,11 @@ void adauga_masina_consola(Service srv) {
     cout << "Introdu tip: ";
     cin >> tip;
     Masina m(nrInmatric, producator, model, tip);
-    srv.adaugaMasina_srv(m);
+    try {
+        srv.adaugaMasina_srv(m);
+    } catch (ValidationException& ex) {
+        cout << ex.what() << endl;
+    }
 
 }
 
@@ -33,16 +37,24 @@ void sterge_masina_consola(Service srv) {
     string nrInmatriculare;
     cout << "Introud nrInmatriculare de sters: ";
     cin >> nrInmatriculare;
-    srv.stergeMasina_srv(nrInmatriculare);
+    try {
+        srv.stergeMasina_srv(nrInmatriculare);
+    }catch (ValidationException& ex) {
+        cout << ex.what() << endl;
+    }
 }
 void modifica_masina_consola(Service srv) {
     string nrInmatriculare_vechi;
     string nrInmatriculare_nou;
-    cout << "Introdu nrInmatriculare vechi: ";
+    cout << "Introdu numar Inmatriculare vechi: ";
     cin >> nrInmatriculare_vechi;
-    cout << "Introdu nrInmatriculare nou: ";
+    cout << "Introdu numar Inmatriculare nou: ";
     cin >> nrInmatriculare_nou;
-    srv.modificaMasina_srv(nrInmatriculare_vechi, nrInmatriculare_nou);
+    try {
+        srv.modificaMasina_srv(nrInmatriculare_vechi, nrInmatriculare_nou);
+    }catch (ValidationException& ex) {
+        cout << ex.what() << endl;
+    }
 }
 void afis_masini_consola(Service srv) {
     srv.afis_Masini_srv();
@@ -54,7 +66,7 @@ void run_console() {
     while (true) {
         int choice;
         print_menu();
-        cout << "Introdu o optiine: ";
+        cout << "Introdu o optiune: ";
         cin >> choice;
         switch (choice) {
             case 1:

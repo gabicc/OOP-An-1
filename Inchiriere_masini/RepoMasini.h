@@ -5,11 +5,14 @@
 #ifndef INCHIRIERE_MASINI_REPOMASINI_H
 #define INCHIRIERE_MASINI_REPOMASINI_H
 #include <vector>
+
+#include "ListaInlantuita.h"
 #include "Masina.h"
 
 class RepoMasini {
+    friend class Service;
 private:
-    vector<Masina> masini;
+    ListaInlantuita<Masina> masini;
 public:
     RepoMasini();
     virtual ~RepoMasini();

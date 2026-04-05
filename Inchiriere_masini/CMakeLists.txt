@@ -13,4 +13,7 @@ add_executable(Inchiriere_masini main.cpp
         Console.cpp
         Console.h
         Service.cpp
-        Service.h)
+        Service.h
+        ListaInlantuita.h
+        Validator.cpp
+        Validator.h)

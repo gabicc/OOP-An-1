@@ -40,3 +40,44 @@ dinamic (la alegere).
 valori de intrare greșite; încearcă sa adauge o entitate de doua ori, încearcă
 sa șteargă / modifice o entitate inexistenta (se vor folosi excepții)
  - Creați o diagramă UML a claselor pentru a schița arhitectura aplicației
+
+
+## Diagrama UML a claselor:
+
+```mermaid
+classDiagram
+    class Masina {
+        - nrInmatriculare: string
+        - producator: string
+        - model: string
+        - tip: string
+        + Masina(nrInmatriculare: string, producator: string, model: string, tip: string)
+        + getNrInmatriculare(): string
+        + getProducator(): string
+        + getModel(): string
+        + getTip(): string
+    }
+
+    class Repository {
+        - masini: vector<Masina>
+        + addMasina(masina: Masina): void
+        + removeMasina(nrInmatriculare: string): void
+        + updateMasina(masina: Masina): void
+        + getAllMasini(): vector<Masina>
+    }
+
+    class Service {
+        - repository: Repository
+        + Service(repository: Repository)
+        + addMasina(masina: Masina): void
+        + removeMasina(nrInmatriculare: string): void
+        + updateMasina(masina: Masina): void
+        + getAllMasini(): vector<Masina>
+    }
+
+    class UI {
+        - service: Service
+        + UI(service: Service)
+        + start(): void
+    }
+```
