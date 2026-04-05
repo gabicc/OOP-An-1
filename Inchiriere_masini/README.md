@@ -57,6 +57,18 @@ classDiagram
         + getModel(): string
         + getTip(): string
     }
+    
+    class MasinaValidator {
+        + validate(masina: Masina): void
+    }
+    
+    class ListaInlantuita{
+        - head: Node<T>*
+        + add(element: T): void
+        + remove(element: T): void
+        + change(oldElement: T, newElement: T): void
+        + find(element: T): bool
+ }
 
     class Repository {
         - masini: vector<Masina>
@@ -72,12 +84,11 @@ classDiagram
         + addMasina(masina: Masina): void
         + removeMasina(nrInmatriculare: string): void
         + updateMasina(masina: Masina): void
-        + getAllMasini(): vector<Masina>
+        + afis_Masini_srv(): void
     }
+    Service "1" --> "1" Repository : owns
+    Service "1" --> "1" MasinaValidator : uses
+    Repository "1" --> "1" ListaInlantuita : uses
+    ListaInlantuita "1" --o "n" Masina : uses
 
-    class UI {
-        - service: Service
-        + UI(service: Service)
-        + start(): void
-    }
 ```
