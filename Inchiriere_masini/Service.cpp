@@ -81,5 +81,9 @@ vector<Masina> Service::sorteaza_dupa_producator_model_srv() const {
 }
 
 int Service::nr_masini() {
-    return repo.masini.getLung();
+    return repo.masini.size();
+}
+
+void Service::golire_srv() {
+    repo.golire_repo();
 }

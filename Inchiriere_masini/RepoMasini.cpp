@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <ostream>
+#include <algorithm>
 
 #include "Validator.h"
 
@@ -16,10 +17,11 @@ RepoMasini::~RepoMasini() {
 }
 
 void RepoMasini::adaugaMasina(const Masina &m) {
-    if (masini.find(m)) {
+    auto it = find(masini.begin(), masini.end(), m);
+    if (it != masini.end()) {
         throw ValidationException("Masina exista deja");
     }
-    masini.add(m);
+    masini.push_back(m);
 }
 
 void RepoMasini::stergeMasina(const string &nrInmatric) {
@@ -30,10 +32,11 @@ void RepoMasini::stergeMasina(const string &nrInmatric) {
     // }
     const Masina m(nrInmatric, "", "", "");
     //const Masina& n = m;
-    if (!masini.find(m)) {
+    auto it = find(masini.begin(), masini.end(), m);
+    if (it == masini.end())  {
         throw ValidationException("Masina stearsa nu exista");
     }
-    masini.remove(m);
+    masini.erase(it);
 }
 
 void RepoMasini::modificaMasina(const string &nrInamtriculare_vechi, const string &nrInamtriculare_nou) {
@@ -43,31 +46,43 @@ void RepoMasini::modificaMasina(const string &nrInamtriculare_vechi, const strin
     // }
     const Masina m(nrInamtriculare_vechi, "", "", "");
     const Masina m_new(nrInamtriculare_nou, "", "", "");
-    if (!masini.find(m)) {
+    auto it = find(masini.begin(), masini.end(), m);
+    if (it == masini.end()) {
         throw ValidationException("Masina modificata nu exista");
     }
-    masini.change(m, m_new);
+    //masini.change(m, m_new);
+    *it = m_new;
 }
 
 void RepoMasini::afis_Masini() {
-    // for (auto &m: masini) {
-    //     m.afis();
-    // }
-    Node<Masina>* curent = masini.getHead();
+    /*for (auto &m: masini) {
+         m.afis();
+    }*/
+    for (vector<Masina>::iterator it = masini.begin(); it != masini.end(); ++it) {
+        (*it).afis();
+    }
+
+    /*Node<Masina>* curent = masini.getHead();
     while (curent != NULL) {
         curent->getVal().afis();
         curent = curent->getNext();
     }
+    */
 }
 
 vector<Masina> RepoMasini::get_all() const {
-    vector<Masina> all;
+    /*vector<Masina> all;
     Node<Masina>* curent = masini.getHead();
     while (curent != NULL) {
         all.push_back(curent->getVal());
         curent = curent->getNext();
     }
-    return all;
+    */
+    return masini;
+}
+
+void RepoMasini::golire_repo() {
+    masini.clear();
 }
 
 

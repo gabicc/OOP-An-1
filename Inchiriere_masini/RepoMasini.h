@@ -12,7 +12,7 @@
 class RepoMasini {
     friend class Service;
 private:
-    ListaInlantuita<Masina> masini;
+    vector<Masina> masini;
 public:
     RepoMasini();
     virtual ~RepoMasini();
@@ -21,6 +21,7 @@ public:
     void modificaMasina(const string& nrInamtriculare_vechi, const string& nrInamtriculare_nou);
     void afis_Masini();
     vector<Masina> get_all() const;
+    void golire_repo();
 };
 
 #endif //INCHIRIERE_MASINI_REPOMASINI_H

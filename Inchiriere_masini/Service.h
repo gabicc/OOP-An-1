@@ -26,6 +26,7 @@ public:
     vector<Masina> sorteaza_dupa_tip_srv() const;
     vector<Masina> sorteaza_dupa_producator_model_srv() const;
     int nr_masini();
+    void golire_srv();
 };
 
 #endif //INCHIRIERE_MASINI_SERVICE_H
