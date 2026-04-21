@@ -86,3 +86,29 @@ void RepoMasini::golire_repo() {
 }
 
 
+vector<Masina> RepoMasini::filtreaza_dupa_pruducator(const string& producator) const {
+    auto filtreaza = [&](const string& valoare, auto getter) {
+        vector<Masina> rezultat;
+        for (const auto& m: masini) {
+            if (getter(m) == valoare)
+                rezultat.push_back(m);
+        }
+        return rezultat;
+    };
+    return filtreaza(producator, [](const Masina& m) {
+        return m.get_producator();
+    });
+}
+vector<Masina> RepoMasini::filtreaza_dupa_tip(const string& tip) const {
+    auto filtreaza = [&](const string& valoare, auto getter) {
+        vector<Masina> rezultat;
+        for (const auto& m: masini) {
+            if (getter(m) == valoare)
+                rezultat.push_back(m);
+        }
+        return rezultat;
+    };
+    return filtreaza(tip, [](const Masina& m) {
+        return m.get_tip();
+    });
+}

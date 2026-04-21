@@ -5,7 +5,11 @@
 #ifndef INCHIRIERE_MASINI_SERVICE_H
 #define INCHIRIERE_MASINI_SERVICE_H
 
+#include <string>
+#include <iostream>
 #include <vector>
+
+using namespace std;
 
 #include "RepoMasini.h"
 #include "Validator.h"
@@ -13,6 +17,7 @@ class Service {
 private:
     RepoMasini& repo;
     Validator validator;
+    vector<Masina> cos;
 public:
     Service(RepoMasini& repo);
     ~Service();
@@ -27,6 +32,12 @@ public:
     vector<Masina> sorteaza_dupa_producator_model_srv() const;
     int nr_masini();
     void golire_srv();
+
+    void adaugaInCos(const string& nrInmatriculare);
+    void golireCos();
+    int nrMasiniCos() const;
+
+    void exportCSV(const string& filename) const;
 };
 
 #endif //INCHIRIERE_MASINI_SERVICE_H

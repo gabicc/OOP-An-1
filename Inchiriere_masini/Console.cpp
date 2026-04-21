@@ -24,6 +24,7 @@ void print_menu() {
     cout << "9. Sorteaza dupa producator + model\n";
     cout << "10. Golire masini\n";
     cout << "11. Genereaza lista cu masini random\n";
+    cout << "12. Export cos CSV\n";
     cout << "0. Iesire\n";
 }
 
@@ -156,6 +157,24 @@ void sorteaza_dupa_producator_model_consola(Service& srv) {
     afiseaza_lista_masini(srv.sorteaza_dupa_producator_model_srv());
 }
 
+void adauga_in_cos_ui(Service& srv) {
+    string nrInmatriculare;
+    cout << "Nr Inmatriculare: ";
+    cin >> nrInmatriculare;
+    try {
+        srv.adaugaInCos(nrInmatriculare);
+    } catch (ValidationException& ex) {
+        cout << ex.what() << '\n';
+    }
+}
+
+void export_csv_ui(Service& srv) {
+    string filename;
+    cout << "Introdu nume fisier CSV: ";
+    cin >> filename;
+    srv.exportCSV(filename);
+}
+
 void run_console() {
     RepoMasini repo;
     Service srv(repo);
@@ -167,36 +186,51 @@ void run_console() {
         switch (choice) {
             case 1:
                 adauga_masina_consola(srv);
+                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
                 break;
             case 2:
                 sterge_masina_consola(srv);
+                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
                 break;
             case 3:
                 modifica_masina_consola(srv);
+                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
                 break;
             case 4:
                 afis_masini_consola(srv);
+                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
                 break;
             case 5:
                 filtreaza_dupa_producator_consola(srv);
+                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
                 break;
             case 6:
                 filtreaza_dupa_tip_consola(srv);
+                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
                 break;
             case 7:
                 sorteaza_dupa_nr_inmatriculare_consola(srv);
+                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
                 break;
             case 8:
                 sorteaza_dupa_tip_consola(srv);
+                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
                 break;
             case 9:
                 sorteaza_dupa_producator_model_consola(srv);
+                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
                 break;
             case 10:
                 srv.golire_srv();
+                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
                 break;
             case 11:
                 genereaza_n_masini_random(srv);
+                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                break;
+            case 12:
+                export_csv_ui(srv);
+                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
                 break;
             case 0:
                 //cout << "La revedere!\n";

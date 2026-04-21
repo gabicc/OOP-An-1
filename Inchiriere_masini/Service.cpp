@@ -5,6 +5,7 @@
 #include "Service.h"
 #include "Validator.h"
 #include <algorithm>
+#include <fstream>
 
 Service::Service(RepoMasini& repo):repo(repo) {
 }
@@ -26,7 +27,7 @@ void Service::afis_Masini_srv() {
 }
 
 vector<Masina> Service::filtreaza_dupa_producator_srv(const string& producator) const {
-    vector<Masina> all = repo.get_all();
+    /*vector<Masina> all = repo.get_all();
     vector<Masina> filtered;
     for (const auto& masina : all) {
         if (masina.get_producator() == producator) {
@@ -34,10 +35,12 @@ vector<Masina> Service::filtreaza_dupa_producator_srv(const string& producator) 
         }
     }
     return filtered;
+    */
+    return repo.filtreaza_dupa_pruducator(producator);
 }
 
 vector<Masina> Service::filtreaza_dupa_tip_srv(const string& tip) const {
-    vector<Masina> all = repo.get_all();
+    /*vector<Masina> all = repo.get_all();
     vector<Masina> filtered;
     for (const auto& masina : all) {
         if (masina.get_tip() == tip) {
@@ -45,6 +48,8 @@ vector<Masina> Service::filtreaza_dupa_tip_srv(const string& tip) const {
         }
     }
     return filtered;
+    */
+    return repo.filtreaza_dupa_tip(tip);
 }
 
 vector<Masina> Service::sorteaza_dupa_nr_inmatriculare_srv() const {
@@ -86,4 +91,36 @@ int Service::nr_masini() {
 
 void Service::golire_srv() {
     repo.golire_repo();
+}
+
+void Service::adaugaInCos(const string &nrInmatriculare) {
+    const auto all = repo.get_all();
+    auto it = find_if(all.begin(), all.end(), [&](const Masina& m) {
+        return m.get_nr_inmatriculare() == nrInmatriculare;
+    });
+    if (it == all.end()) {
+        throw ValidationException("Masina nu exista");
+    }
+    cos.push_back(*it);
+}
+
+void Service::golireCos() {
+    cos.clear();
+}
+
+int Service::nrMasiniCos() const {
+    return cos.size();
+}
+
+void Service::exportCSV(const string& filename) const {
+    ofstream fout(filename);
+    if (!fout.is_open()) {
+        throw ValidationException("Nu s-a putut deschide fisierul CSV");
+    }
+
+    fout << "nrInmatriculare, producator, model, tip\n";
+    const auto all = repo.get_all();
+    for (const auto& m: all) {
+        fout << m.get_nr_inmatriculare() << ", " << m.get_producator() << ", " << m.get_model() << ", " << m.get_tip() << '\n';
+    }
 }

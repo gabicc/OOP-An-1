@@ -22,6 +22,9 @@ public:
     void afis_Masini();
     vector<Masina> get_all() const;
     void golire_repo();
+
+    vector<Masina> filtreaza_dupa_pruducator(const string& producator) const;
+    vector<Masina> filtreaza_dupa_tip(const string& tip) const;
 };
 
 #endif //INCHIRIERE_MASINI_REPOMASINI_H
