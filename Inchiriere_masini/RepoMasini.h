@@ -8,11 +8,13 @@
 
 #include "ListaInlantuita.h"
 #include "Masina.h"
+#include "Undo.h"
 
 class RepoMasini {
     friend class Service;
 private:
     vector<Masina> masini;
+    vector<ActiuneUndo*> actiuni_undo;
 public:
     RepoMasini();
     virtual ~RepoMasini();
@@ -20,6 +22,7 @@ public:
     void stergeMasina(const string& nrInmatric);
     void modificaMasina(const string& nrInamtriculare_vechi, const string& nrInamtriculare_nou);
     void afis_Masini();
+    void Undo();
     vector<Masina> get_all() const;
     void golire_repo();
 

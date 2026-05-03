@@ -8,12 +8,16 @@
 #include <ostream>
 #include <algorithm>
 
+#include "UndoAdauga.h"
+#include "UndoModifica.h"
+#include "UndoSterge.h"
 #include "Validator.h"
 
 RepoMasini::RepoMasini() {
 }
 
 RepoMasini::~RepoMasini() {
+    //TODO delete actiuni_undo
 }
 
 void RepoMasini::adaugaMasina(const Masina &m) {
@@ -22,6 +26,7 @@ void RepoMasini::adaugaMasina(const Masina &m) {
         throw ValidationException("Masina exista deja");
     }
     masini.push_back(m);
+    actiuni_undo.push_back(new UndoAdauga(masini));
 }
 
 void RepoMasini::stergeMasina(const string &nrInmatric) {
@@ -36,7 +41,9 @@ void RepoMasini::stergeMasina(const string &nrInmatric) {
     if (it == masini.end())  {
         throw ValidationException("Masina stearsa nu exista");
     }
+    Masina masina_stearsa = *it;
     masini.erase(it);
+    actiuni_undo.push_back(new UndoSterge(masini, masina_stearsa));
 }
 
 void RepoMasini::modificaMasina(const string &nrInamtriculare_vechi, const string &nrInamtriculare_nou) {
@@ -52,6 +59,7 @@ void RepoMasini::modificaMasina(const string &nrInamtriculare_vechi, const strin
     }
     //masini.change(m, m_new);
     *it = m_new;
+    actiuni_undo.push_back(new UndoModifica(masini, m, nrInamtriculare_nou));
 }
 
 void RepoMasini::afis_Masini() {
@@ -111,4 +119,14 @@ vector<Masina> RepoMasini::filtreaza_dupa_tip(const string& tip) const {
     return filtreaza(tip, [](const Masina& m) {
         return m.get_tip();
     });
+}
+
+void RepoMasini::Undo() {
+    if (!actiuni_undo.empty()) {
+        ActiuneUndo* ultima_actiune = actiuni_undo.back();
+        masini = ultima_actiune->doUndo();
+        actiuni_undo.pop_back();
+        delete ultima_actiune;
+
+    }
 }

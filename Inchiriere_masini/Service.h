@@ -8,6 +8,8 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <map>
+#include "Masina.h"
 
 using namespace std;
 
@@ -32,12 +34,15 @@ public:
     vector<Masina> sorteaza_dupa_producator_model_srv() const;
     int nr_masini();
     void golire_srv();
+    void Undo();
 
     void adaugaInCos(const string& nrInmatriculare);
     void golireCos();
     int nrMasiniCos() const;
 
     void exportCSV(const string& filename) const;
+
+    map<string, int> statistica_pruducatori() const;
 };
 
 #endif //INCHIRIERE_MASINI_SERVICE_H

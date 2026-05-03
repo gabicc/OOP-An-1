@@ -124,3 +124,16 @@ void Service::exportCSV(const string& filename) const {
         fout << m.get_nr_inmatriculare() << ", " << m.get_producator() << ", " << m.get_model() << ", " << m.get_tip() << '\n';
     }
 }
+
+map<string, int> Service::statistica_pruducatori() const {
+    map<string, int> stats;
+    vector<Masina> all = repo.get_all();
+    for (const auto& m: all) {
+        stats[m.get_producator()]++;
+    }
+    return stats;
+}
+
+void Service::Undo() {
+    repo.Undo();
+}

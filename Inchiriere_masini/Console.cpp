@@ -10,6 +10,8 @@
 #include <chrono>
 #include <cstdlib>
 #include <ctime>
+#include <map>
+#include "Masina.h"
 using namespace std;
 
 void print_menu() {
@@ -25,7 +27,13 @@ void print_menu() {
     cout << "10. Golire masini\n";
     cout << "11. Genereaza lista cu masini random\n";
     cout << "12. Export cos CSV\n";
+    cout << "13. Statistica producatori\n";
+    cout << "14. Undo\n";
     cout << "0. Iesire\n";
+}
+
+void Undo_ui(Service& srv) {
+    srv.Undo();
 }
 
 void afiseaza_lista_masini(const vector<Masina>& masini) {
@@ -175,6 +183,16 @@ void export_csv_ui(Service& srv) {
     srv.exportCSV(filename);
 }
 
+void statistica_producat_ui(Service& srv) {
+    map<string, int> stats = srv.statistica_pruducatori();
+    for (const auto& [producator, cont]: stats) {
+        if (cont == 1)
+            cout << "Producatorul: " << producator << " are " << cont << " masina\n";
+        else
+            cout << "Producatorul: " << producator << " are " << cont << " masini\n";
+    }
+}
+
 void run_console() {
     RepoMasini repo;
     Service srv(repo);
@@ -230,6 +248,15 @@ void run_console() {
                 break;
             case 12:
                 export_csv_ui(srv);
+                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                break;
+            //TREBUIE SA FAC O FUNCTIONALITATE DE TIP DICTIONAR CARE ZICE CATI PRODUCATIRI "A" SUNT, CATI "B" SUNT, ETC
+            case 13:
+                statistica_producat_ui(srv);
+                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                break;
+            case 14:
+                Undo_ui(srv);
                 cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
                 break;
             case 0:

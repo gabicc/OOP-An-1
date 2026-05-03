@@ -16,4 +16,14 @@ add_executable(Inchiriere_masini main.cpp
         Service.h
         ListaInlantuita.h
         Validator.cpp
-        Validator.h)
+        Validator.h
+        Undo.cpp
+        Undo.h
+        UndoAdauga.cpp
+        UndoAdauga.h
+        UndoSterge.cpp
+        UndoSterge.h
+        UndoModifica.cpp
+        UndoModifica.h
+        Repo.cpp
+        Repo.h)
