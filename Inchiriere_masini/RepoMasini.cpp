@@ -12,6 +12,7 @@
 #include "UndoModifica.h"
 #include "UndoSterge.h"
 #include "Validator.h"
+#include <random>
 
 RepoMasini::RepoMasini() {
 }
@@ -130,3 +131,13 @@ void RepoMasini::Undo() {
 
     }
 }
+
+// void RepoMasini::arunca_exceptie_random() const {
+//     random_device rd;
+//     mt19937 gen(rd());
+//     uniform_real_distribution<> dis(0.0, 1.0);
+//     if (dis(gen) < probabilitate_aruncare_exceptie) {
+//         throw ValidationException("Exceptie aruncata random");
+//     }
+// }
+

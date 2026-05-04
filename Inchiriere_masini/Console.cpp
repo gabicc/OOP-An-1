@@ -12,6 +12,7 @@
 #include <ctime>
 #include <map>
 #include "Masina.h"
+#include "RepoMasiniMap.h"
 using namespace std;
 
 void print_menu() {
@@ -194,76 +195,82 @@ void statistica_producat_ui(Service& srv) {
 }
 
 void run_console() {
-    RepoMasini repo;
+    Repo* repo = new RepoMasiniMap(0.2);
     Service srv(repo);
     while (true) {
         int choice;
         print_menu();
         cout << "Introdu o optiune: ";
         cin >> choice;
-        switch (choice) {
-            case 1:
-                adauga_masina_consola(srv);
-                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
-                break;
-            case 2:
-                sterge_masina_consola(srv);
-                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
-                break;
-            case 3:
-                modifica_masina_consola(srv);
-                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
-                break;
-            case 4:
-                afis_masini_consola(srv);
-                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
-                break;
-            case 5:
-                filtreaza_dupa_producator_consola(srv);
-                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
-                break;
-            case 6:
-                filtreaza_dupa_tip_consola(srv);
-                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
-                break;
-            case 7:
-                sorteaza_dupa_nr_inmatriculare_consola(srv);
-                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
-                break;
-            case 8:
-                sorteaza_dupa_tip_consola(srv);
-                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
-                break;
-            case 9:
-                sorteaza_dupa_producator_model_consola(srv);
-                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
-                break;
-            case 10:
-                srv.golire_srv();
-                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
-                break;
-            case 11:
-                genereaza_n_masini_random(srv);
-                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
-                break;
-            case 12:
-                export_csv_ui(srv);
-                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
-                break;
-            //TREBUIE SA FAC O FUNCTIONALITATE DE TIP DICTIONAR CARE ZICE CATI PRODUCATIRI "A" SUNT, CATI "B" SUNT, ETC
-            case 13:
-                statistica_producat_ui(srv);
-                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
-                break;
-            case 14:
-                Undo_ui(srv);
-                cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
-                break;
-            case 0:
-                //cout << "La revedere!\n";
-                return;
-            default:
-                cout << "Optiune invalida. Incearca din nou.\n";
+        try {
+            switch (choice) {
+                case 1:
+                    adauga_masina_consola(srv);
+                    cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                    break;
+                case 2:
+                    sterge_masina_consola(srv);
+                    cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                    break;
+                case 3:
+                    modifica_masina_consola(srv);
+                    cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                    break;
+                case 4:
+                    afis_masini_consola(srv);
+                    cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                    break;
+                case 5:
+                    filtreaza_dupa_producator_consola(srv);
+                    cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                    break;
+                case 6:
+                    filtreaza_dupa_tip_consola(srv);
+                    cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                    break;
+                case 7:
+                    sorteaza_dupa_nr_inmatriculare_consola(srv);
+                    cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                    break;
+                case 8:
+                    sorteaza_dupa_tip_consola(srv);
+                    cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                    break;
+                case 9:
+                    sorteaza_dupa_producator_model_consola(srv);
+                    cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                    break;
+                case 10:
+                    srv.golire_srv();
+                    cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                    break;
+                case 11:
+                    genereaza_n_masini_random(srv);
+                    cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                    break;
+                case 12:
+                    export_csv_ui(srv);
+                    cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                    break;
+                    //TREBUIE SA FAC O FUNCTIONALITATE DE TIP DICTIONAR CARE ZICE CATI PRODUCATIRI "A" SUNT, CATI "B" SUNT, ETC
+                case 13:
+                    statistica_producat_ui(srv);
+                    cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                    break;
+                case 14:
+                    Undo_ui(srv);
+                    cout << "Nr total masini din lista: " << srv.nr_masini() << endl;
+                    break;
+                case 0:
+                    //cout << "La revedere!\n";
+                    return;
+                default:
+                    cout << "Optiune invalida. Incearca din nou.\n";
+            }
+        } catch (ValidationException& ex) {
+            cerr << "!!!!!!!!!!!!!!!!!!!------------------!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
+            cerr << endl << ex.what() << endl;
+            cerr << "!!!!!!!!!!!!!!!!!!!------------------!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
         }
     }
 }

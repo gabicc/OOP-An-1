@@ -2,24 +2,27 @@
 // Created by gabi on 3/30/26.
 //
 
-#ifndef INCHIRIERE_MASINI_REPOMASINI_H
-#define INCHIRIERE_MASINI_REPOMASINI_H
+#ifndef INCHIRIERE_MASINI_REPOMASINIMAP_H
+#define INCHIRIERE_MASINI_REPOMASINIMAP_H
 #include <vector>
 
 #include "ListaInlantuita.h"
 #include "Masina.h"
 #include "Undo.h"
 #include "Repo.h"
+#include <map>
 
-class RepoMasini: public Repo{
+class RepoMasiniMap: public Repo{
     friend class Service;
 private:
-    vector<Masina> masini;
+    map<string, Masina> masini;
     vector<ActiuneUndo*> actiuni_undo;
     //void arunca_exceptie_random() const;
+    double probabilitate_aruncare_exception;
+    void arunca_exceptie_random() const;
 public:
-    RepoMasini();
-    virtual ~RepoMasini();
+    RepoMasiniMap(double probabilitate_aruncare_exceptie);
+    virtual ~RepoMasiniMap();
     void adaugaMasina(const Masina& m);
     void stergeMasina(const string& nrInmatric);
     void modificaMasina(const string& nrInamtriculare_vechi, const string& nrInamtriculare_nou);
@@ -32,4 +35,4 @@ public:
     vector<Masina> filtreaza_dupa_tip(const string& tip) const;
 };
 
-#endif //INCHIRIERE_MASINI_REPOMASINI_H
+#endif //INCHIRIERE_MASINI_REPOMASINIMAP_H

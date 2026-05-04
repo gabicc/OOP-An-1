@@ -17,11 +17,11 @@ using namespace std;
 #include "Validator.h"
 class Service {
 private:
-    RepoMasini& repo;
+    Repo* repo;
     Validator validator;
     vector<Masina> cos;
 public:
-    Service(RepoMasini& repo);
+    Service(Repo* repo);
     ~Service();
     void adaugaMasina_srv(const Masina& m);
     void stergeMasina_srv(const string& nrInmatric);

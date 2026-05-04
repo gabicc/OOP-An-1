@@ -34,7 +34,7 @@ void test_afis() {
 
 void test_service_adaugare_single() {
     RepoMasini repo;
-    Service srv(repo);
+    Service srv(&repo);
     Masina m("CJ19DGC", "Hyundai", "Tucson", "Diesel");
 
     srv.adaugaMasina_srv(m);
@@ -45,7 +45,7 @@ void test_service_adaugare_single() {
 
 void test_service_adaugare_multiple() {
     RepoMasini repo;
-    Service srv(repo);
+    Service srv(&repo);
     Masina m1("CJ19DGC", "Hyundai", "Tucson", "Diesel");
     Masina m2("CJ20XYZ", "Toyota", "Corolla", "Hybrid");
 
@@ -62,7 +62,7 @@ void test_service_adaugare_multiple() {
 
 void test_service_sterge_existing() {
     RepoMasini repo;
-    Service srv(repo);
+    Service srv(&repo);
     Masina m1("CJ19DGC", "Hyundai", "Tucson", "Diesel");
     Masina m2("CJ20XYZ", "Toyota", "Corolla", "Hybrid");
 
@@ -77,7 +77,7 @@ void test_service_sterge_existing() {
 
 void test_service_sterge_nonexistent() {
     RepoMasini repo;
-    Service srv(repo);
+    Service srv(&repo);
     Masina m("CJ19DGC", "Hyundai", "Tucson", "Diesel");
     srv.adaugaMasina_srv(m);
 
@@ -93,7 +93,7 @@ void test_service_sterge_nonexistent() {
 
 void test_service_modifica_existing() {
     RepoMasini repo;
-    Service srv(repo);
+    Service srv(&repo);
     Masina m("CJ19DGC", "Hyundai", "Tucson", "Diesel");
 
     srv.adaugaMasina_srv(m);
@@ -105,7 +105,7 @@ void test_service_modifica_existing() {
 
 void test_service_modifica_nonexistent() {
     RepoMasini repo;
-    Service srv(repo);
+    Service srv(&repo);
 
     try {
         srv.modificaMasina_srv("INVALID", "NEWPLATE");
@@ -118,7 +118,7 @@ void test_service_modifica_nonexistent() {
 
 void test_service_filtrare_dupa_producator() {
     RepoMasini repo;
-    Service srv(repo);
+    Service srv(&repo);
     srv.adaugaMasina_srv(Masina("CJ10AAA", "Audi", "A4", "Sedan"));
     srv.adaugaMasina_srv(Masina("CJ11BBB", "BMW", "X3", "SUV"));
     srv.adaugaMasina_srv(Masina("CJ12CCC", "Audi", "Q7", "SUV"));
@@ -131,7 +131,7 @@ void test_service_filtrare_dupa_producator() {
 
 void test_service_filtrare_dupa_tip() {
     RepoMasini repo;
-    Service srv(repo);
+    Service srv(&repo);
     srv.adaugaMasina_srv(Masina("CJ10AAA", "Audi", "A4", "Sedan"));
     srv.adaugaMasina_srv(Masina("CJ11BBB", "BMW", "X3", "SUV"));
     srv.adaugaMasina_srv(Masina("CJ12CCC", "Audi", "Q7", "SUV"));
@@ -144,7 +144,7 @@ void test_service_filtrare_dupa_tip() {
 
 void test_service_sortare_dupa_nr_inmatriculare() {
     RepoMasini repo;
-    Service srv(repo);
+    Service srv(&repo);
     srv.adaugaMasina_srv(Masina("CJ30ZZZ", "VW", "Golf", "Hatchback"));
     srv.adaugaMasina_srv(Masina("CJ10AAA", "Audi", "A4", "Sedan"));
     srv.adaugaMasina_srv(Masina("CJ20MMM", "BMW", "X3", "SUV"));
@@ -158,7 +158,7 @@ void test_service_sortare_dupa_nr_inmatriculare() {
 
 void test_service_sortare_dupa_tip() {
     RepoMasini repo;
-    Service srv(repo);
+    Service srv(&repo);
     srv.adaugaMasina_srv(Masina("CJ30ZZZ", "VW", "Golf", "SUV"));
     srv.adaugaMasina_srv(Masina("CJ10AAA", "Audi", "A4", "Sedan"));
     srv.adaugaMasina_srv(Masina("CJ20MMM", "BMW", "X3", "SUV"));
@@ -174,7 +174,7 @@ void test_service_sortare_dupa_tip() {
 
 void test_service_sortare_dupa_producator_model() {
     RepoMasini repo;
-    Service srv(repo);
+    Service srv(&repo);
     srv.adaugaMasina_srv(Masina("CJ30ZZZ", "BMW", "X5", "SUV"));
     srv.adaugaMasina_srv(Masina("CJ10AAA", "Audi", "A4", "Sedan"));
     srv.adaugaMasina_srv(Masina("CJ20MMM", "BMW", "X3", "SUV"));

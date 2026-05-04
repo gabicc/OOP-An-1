@@ -20,18 +20,18 @@ probabilitatea data.
 using namespace std;
 
 class Repo {
-    friend class Service;
-private:
-    map<string, Masina> masini;
-    double probabilitate_aruncare_exceptie;
-
-    void arunca_exceptie_random() const;
 public:
-    Repo(double probabilitate_aruncare_exceptie);
-    virtual ~Repo();
-    virtual void addMasina(const string& nrInmatric, const string& producator, const string& model, const string& tip) = 0;
-    virtual void removeMasina(const string& nrInmatric) = 0;
-    virtual void modifyMasina(const string& nrInmatric_vechi, const string& nrInmatric_nou) = 0;
+    virtual ~Repo(){};
+    virtual void adaugaMasina(const Masina& m) = 0;
+    virtual void stergeMasina(const string& nrInmatric) = 0;
+    virtual void modificaMasina(const string& nrInamtriculare_vechi, const string& nrInamtriculare_nou) = 0;
+    virtual void afis_Masini() = 0;
+    virtual void Undo() = 0;
+    virtual vector<Masina> get_all() const = 0;
+    virtual void golire_repo() = 0;
+
+    virtual vector<Masina> filtreaza_dupa_pruducator(const string& producator) const = 0;
+    virtual vector<Masina> filtreaza_dupa_tip(const string& tip) const = 0;
 };
 
 

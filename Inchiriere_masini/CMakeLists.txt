@@ -25,5 +25,6 @@ add_executable(Inchiriere_masini main.cpp
         UndoSterge.h
         UndoModifica.cpp
         UndoModifica.h
-        Repo.cpp
-        Repo.h)
+        Repo.h
+        RepoMasiniMap.cpp
+        RepoMasiniMap.h)
