@@ -40,6 +40,8 @@ public:
     void golireCos();
     int nrMasiniCos() const;
 
+    vector<Masina> get_all_srv() const;
+
     void exportCSV(const string& filename) const;
 
     map<string, int> statistica_pruducatori() const;

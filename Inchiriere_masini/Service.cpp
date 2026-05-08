@@ -137,3 +137,7 @@ map<string, int> Service::statistica_pruducatori() const {
 void Service::Undo() {
     repo->Undo();
 }
+
+vector<Masina> Service::get_all_srv() const {
+    return repo->get_all();
+}
