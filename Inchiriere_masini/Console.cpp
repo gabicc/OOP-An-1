@@ -68,47 +68,13 @@ char random_letter() {
     return ch;
 }*/
 
-char random_letter(mt19937& mt) {
-    static uniform_int_distribution<int> distLetter(0, 25);
-    return static_cast<char>('A' + distLetter(mt));
-}
-
-Masina genereaza_masina(int index) {
-    mt19937 mt{ random_device{}()};
-    uniform_int_distribution<> dist(1, 100);
-    int rndNr = dist(mt);
-    char a = random_letter(mt), b = random_letter(mt), c = random_letter(mt), d = random_letter(mt), e = random_letter(mt);
-    string result;
-    result += a;
-    result += b;
-    result += to_string(rndNr);
-    result += c;
-    result += d;
-    result += e;
-    string producator;
-    for (int i = 0; i < 5; i++) {
-        char a = random_letter(mt);
-        producator += a;
-    }
-    string model;
-    for (int i = 0; i < 5; i++) {
-        char a = random_letter(mt);
-        model += a;
-    }
-    string tip;
-    for (int i = 0; i < 5; i++) {
-        char a = random_letter(mt);
-        tip += a;
-    }
-    return Masina(result, producator, model, tip);
-}
 
 void genereaza_n_masini_random(Service& srv) {
     int n;
     cout << "Introdu numar de masini random de generat: ";
     cin >> n;
     for (int i = 0; i < n; i++) {
-        Masina m = genereaza_masina(i);
+        Masina m = Masina::genereaza_masina(i);
         srv.adaugaMasina_srv(m);
     }
 }

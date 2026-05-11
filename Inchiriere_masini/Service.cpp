@@ -27,7 +27,7 @@ void Service::afis_Masini_srv() {
 }
 
 vector<Masina> Service::filtreaza_dupa_producator_srv(const string& producator) const {
-    /*vector<Masina> all = repo.get_all();
+    /*vector<Masina> all = repo->get_all();
     vector<Masina> filtered;
     for (const auto& masina : all) {
         if (masina.get_producator() == producator) {
@@ -84,6 +84,16 @@ vector<Masina> Service::sorteaza_dupa_producator_model_srv() const {
     });
     return sorted;
 }
+
+/*
+void Service::filtreaza_si_sterge_producator_srv(const string& producator) {
+    repo->filtreaza_si_sterge_dupa_producator(producator);
+}
+
+void Service::filtreaza_si_sterge_tip_srv(const string& tip) {
+    repo->filtreaza_si_sterge_dupa_tip(tip);
+}
+*/
 
 int Service::nr_masini() {
     return repo->get_all().size();

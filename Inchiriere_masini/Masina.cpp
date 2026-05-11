@@ -4,6 +4,7 @@
 
 #include "Masina.h"
 #include <iostream>
+#include <random>
 
 Masina::Masina(const string& nrInmatric, const string& produc, const string& mod, const string& t) {
     this->nrInmatriculare = nrInmatric;
@@ -51,4 +52,39 @@ Masina& Masina::operator=(const char* other) {
 
 bool Masina::operator==(const Masina& other) const {
     return this->get_nr_inmatriculare() == other.nrInmatriculare;
+}
+
+char random_letter(mt19937& mt) {
+    static uniform_int_distribution<int> distLetter(0, 25);
+    return static_cast<char>('A' + distLetter(mt));
+}
+
+Masina Masina::genereaza_masina(int index) {
+    mt19937 mt{ random_device{}()};
+    uniform_int_distribution<> dist(1, 100);
+    int rndNr = dist(mt);
+    char a = random_letter(mt), b = random_letter(mt), c = random_letter(mt), d = random_letter(mt), e = random_letter(mt);
+    string result;
+    result += a;
+    result += b;
+    result += to_string(rndNr);
+    result += c;
+    result += d;
+    result += e;
+    string producator;
+    for (int i = 0; i < 5; i++) {
+        char a = random_letter(mt);
+        producator += a;
+    }
+    string model;
+    for (int i = 0; i < 5; i++) {
+        char a = random_letter(mt);
+        model += a;
+    }
+    string tip;
+    for (int i = 0; i < 5; i++) {
+        char a = random_letter(mt);
+        tip += a;
+    }
+    return Masina(result, producator, model, tip);
 }

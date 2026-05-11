@@ -20,6 +20,9 @@
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QHeaderView>
+#include <QMessageBox>
+#include <QSpinBox>
+#include <QListWidget>
 
 using namespace std;
 
@@ -42,16 +45,26 @@ private:
     QPushButton* btnModifyMasina;
     QPushButton* btnFilterMasiniProducator;
     QPushButton* btnFilterMasiniTip;
+    QPushButton* btnGenerareRandomMasini;
+    QPushButton* btnUndo;
+    QSpinBox* spinBoxRandomMasini;
+
+    QVBoxLayout *lyRightRight;
+
+    vector<QPushButton*> butoaneDinamice;
 
     QGroupBox* groupBox = new QGroupBox(tr("Tip sortare"));
 
     QRadioButton* radioSrtNrInmatric = new QRadioButton(QString::fromStdString("Nr Inmatriculare"));
     QRadioButton* radioSrtTip = new QRadioButton(QString::fromStdString("Tip"));
-    QRadioButton* radioSrtProducatorModel = new QRadioButton(QString::fromStdString("Producator+Model"));
+    QRadioButton* radioSrtProducatorModel = new QRadioButton(QString::fromStdString("Producator && Model"));
+    //QRadioButton* radioSrtModel = new QRadioButton(QString::fromStdString("Model"));
+    bool are_producator(string producator);
 
-    QPushButton* btnReloadData;
+    QPushButton* btnSortMasini;
 
     QTableWidget* tableMasini;
+    QListWidget* listWidgetMasini;
 
     void initializeGUIComponents();
 
@@ -64,6 +77,13 @@ public:
         reloadMasiniList(srv.get_all_srv());
     }
     void guiAddMasina();
+    void guiModificaMasina();
+    void guiRemoveMasina();
+    void guiFilterMasiniProducator();
+    void guiFilterMasiniTip();
+    void guiGenerareRandomMasini();
+    void guiSortMasini();
+    void guiUndo();
 
 };
 

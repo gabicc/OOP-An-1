@@ -55,15 +55,18 @@ void RepoMasiniMap::modificaMasina(const string &nrInamtriculare_vechi, const st
     //         m.change_nrInmatriculare(nrInamtriculare_nou);
     // }
     arunca_exceptie_random();
-    const Masina m(nrInamtriculare_vechi, "", "", "");
-    const Masina m_new(nrInamtriculare_nou, "", "", "");
-    auto it = masini.find(m.get_nr_inmatriculare());
+    //const Masina m(nrInamtriculare_vechi, "", "", "");
+
+
+    auto it = masini.find(nrInamtriculare_vechi);
     if (it == masini.end()) {
         throw ValidationException("Masina modificata nu exista");
     }
+    const Masina m_old = it->second;
+    const Masina m_new(nrInamtriculare_nou, m_old.get_producator(), m_old.get_model(), m_old.get_tip());
     //masini.change(m, m_new);
     it->second = m_new;
-    actiuni_undo.push_back(new UndoModifica(this->get_all(), m, nrInamtriculare_nou));
+    actiuni_undo.push_back(new UndoModifica(this->get_all(), m_old, nrInamtriculare_nou));
 }
 
 void RepoMasiniMap::afis_Masini() {

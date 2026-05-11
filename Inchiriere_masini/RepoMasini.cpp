@@ -122,6 +122,26 @@ vector<Masina> RepoMasini::filtreaza_dupa_tip(const string& tip) const {
     });
 }
 
+void RepoMasini::filtreaza_si_sterge_dupa_producator(const string &producator) {
+    vector<Masina> to_keep;
+    for (const auto& m: masini) {
+        if (m.get_producator() == producator) {
+            to_keep.push_back(m);
+        }
+    }
+    masini = to_keep;
+}
+
+void RepoMasini::filtreaza_si_sterge_dupa_tip(const string &tip) {
+    vector<Masina> to_keep;
+    for (const auto& m: masini) {
+        if (m.get_tip() == tip) {
+            to_keep.push_back(m);
+        }
+    }
+    masini = to_keep;
+}
+
 void RepoMasini::Undo() {
     if (!actiuni_undo.empty()) {
         ActiuneUndo* ultima_actiune = actiuni_undo.back();

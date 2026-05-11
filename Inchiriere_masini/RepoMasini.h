@@ -11,6 +11,16 @@
 #include "Undo.h"
 #include "Repo.h"
 
+class RepoException {
+private:
+    string errorMessage;
+public:
+    RepoException(string errorMsg): errorMessage{errorMsg} {};
+    string getErrorMessage() const {
+        return this->errorMessage;
+    }
+};
+
 class RepoMasini: public Repo{
     friend class Service;
 private:
@@ -30,6 +40,9 @@ public:
 
     vector<Masina> filtreaza_dupa_pruducator(const string& producator) const;
     vector<Masina> filtreaza_dupa_tip(const string& tip) const;
+
+    void filtreaza_si_sterge_dupa_producator(const string& producator);
+    void filtreaza_si_sterge_dupa_tip(const string& tip);
 };
 
 #endif //INCHIRIERE_MASINI_REPOMASINI_H

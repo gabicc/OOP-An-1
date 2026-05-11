@@ -13,6 +13,15 @@ public:
     // Constructor
     ValidationException(string msg) : message(msg) {}
 
+    string getErrorMessage() const {
+        string fullMsg = "";
+        for (const char e: message) {
+            fullMsg += e;
+        }
+        fullMsg += '\n';
+        return fullMsg;
+    }
+
     // Override what() method
     const char* what() const noexcept override {
         return message.c_str();

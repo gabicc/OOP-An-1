@@ -32,6 +32,8 @@ public:
     Masina& operator=(const Masina& other);
     Masina& operator=(const char* other);
     bool operator==(const Masina& other) const;
+    static Masina genereaza_masina(int index);
+
 };
 
 #endif //INCHIRIERE_MASINI_MASINA_H

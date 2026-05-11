@@ -32,6 +32,8 @@ public:
     vector<Masina> sorteaza_dupa_nr_inmatriculare_srv() const;
     vector<Masina> sorteaza_dupa_tip_srv() const;
     vector<Masina> sorteaza_dupa_producator_model_srv() const;
+    //void filtreaza_si_sterge_producator_srv(const string& producator);
+    //void filtreaza_si_sterge_tip_srv(const string& tip);
     int nr_masini();
     void golire_srv();
     void Undo();
