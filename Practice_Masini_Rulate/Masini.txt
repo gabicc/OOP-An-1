@@ -1,0 +1,7 @@
+CJ19DGC,Hyundai,Rosu,10000
+CJ20DGC,Volkswagen,Negru,12000
+CJ21DGC,Renault,Albastru,11000
+AB22DGC,Peugeot,Gri,9000
+CJ23DGC,Fiat,Alb,8000
+RG24DGC,Opel,Argintiu,9500
+CJ25DGC,Skoda,Verde,10500

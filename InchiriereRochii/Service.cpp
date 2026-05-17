@@ -7,8 +7,7 @@
 
 using namespace std;
 
-Service::Service() {
-
+Service::Service(Repo repo, Validator val): repo{repo}, validator{val} {
 }
 
 Service::~Service() {
@@ -31,53 +30,4 @@ void Service::updateRochie_srv(int cod, Rochie r_nou) {
 
 void Service::afisRochii_srv() {
     this->repo.afisRochii();
-}
-
-void Service::load_from_file(string filename) {
-    ifstream fin(filename);
-    if (!fin.is_open()) {
-        cout << "Nu s-a putut deschide fisierul\n";
-        return;
-    }
-    string line;
-    while (getline(fin, line)) {
-        int cod = 0;
-        string denumire;
-        double marime;
-        double pret;
-        bool disponibil;
-
-        int i = 0;
-        while (i < line.size() && line[i] != ',') {
-            cod = cod * 10 + line[i] - '0';
-            i++;
-        }
-        i++;
-        while (i < line.size() && line[i] != ',') {
-            denumire += line[i];
-            i++;
-        }
-        i++;
-        while (i < line.size() && line[i] != ',') {
-            marime = marime * 10 + line[i] - '0';
-            i++;
-        }
-        i++;
-        while (i < line.size() && line[i] != ',') {
-            pret = pret * 1- + line[i] - '0';
-            i++;
-        }
-        i++;
-        if (line[i] == '1' || line[i] == 'T')
-            disponibil = true;
-        else
-            disponibil = false;
-        Rochie r(cod, denumire, marime, pret, disponibil);
-        try {
-            addRochie_srv(r);
-        }
-        catch (ValidatorException& e) {
-            cout << "Rochia de pe linia " << line << " nu a fost adaugata\n";
-        }
-    }
 }

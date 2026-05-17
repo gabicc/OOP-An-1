@@ -22,6 +22,9 @@ public:
     void addMasina_srv(Masina m);
     void removeMasina_srv(char* nrMatricol);
     void updateMasina_srv(char* nrMatricol, Masina m);
+    void rentMasina_srv(char* nrMatricol);
+    vector<Masina> sortareModel_srv();
+    vector<Masina> sortareNrMatricol_srv();
     vector<Masina> get_all_srv();
 };
 

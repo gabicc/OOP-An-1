@@ -14,13 +14,15 @@ private:
     Repo repo;
     Validator validator;
 public:
-    Service();
+    Service(Repo repo, Validator val);
     ~Service();
     void addRochie_srv(Rochie r);
     void removeRochie_srv(int cod);
     void updateRochie_srv(int cod, Rochie r_nou);
     void afisRochii_srv();
-    void load_from_file(string filename);
+    vector<Rochie> get_all_srv() {
+        return repo.get_all_repo();
+    }
 };
 
 

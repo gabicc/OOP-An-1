@@ -18,7 +18,7 @@ private:
     double pret;
     bool disponibil;
 public:
-    Rochie() : cod{0}, denumire{""}, marime{0}, pret{0}, disponibil{false} {};
+    Rochie(): cod{0}, denumire{""}, marime{0}, pret{0}, disponibil{false} {};
     Rochie(int cod, const string denumire, double marime, double pret, bool disponibil): cod{cod}, denumire{denumire}, marime{marime}, pret{pret}, disponibil{disponibil} {};
     ~Rochie();
     int get_cod();
@@ -27,6 +27,7 @@ public:
     double get_pret();
     bool get_disponibil();
     void operator=(const Rochie& other);
+
 };
 
 

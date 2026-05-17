@@ -11,7 +11,7 @@
 #include <string.h>
 #include <fstream>
 
-ifstream fin("Rochii.txt");
+//ifstream fin("Rochii.txt");
 
 using namespace std;
 
@@ -75,31 +75,31 @@ void afis_rochii_consola(Service& srv) {
     srv.afisRochii_srv();
 }
 
-void run_console() {
-    Service srv;
-    srv.load_from_file("Rochii.txt");
-    while (true) {
-        int choice;
-        print_menu();
-        cout << "Introdu o optiune: ";
-        cin >> choice;
-        switch (choice) {
-            case 1:
-                add_rochie_consola(srv);
-                break;
-            case 2:
-                remove_rochie_consola(srv);
-                break;
-            case 3:
-                update_rochie_consola(srv);
-                break;
-            case 4:
-                afis_rochii_consola(srv);
-                break;
-            case 0:
-                return;
-            default:
-                cout << "Optiune invalida. Incearca din nou\n";
-        }
-    }
-}
+// void run_console() {
+//     Service& srv;
+//     srv.load_from_file("Rochii.txt");
+//     while (true) {
+//         int choice;
+//         print_menu();
+//         cout << "Introdu o optiune: ";
+//         cin >> choice;
+//         switch (choice) {
+//             case 1:
+//                 add_rochie_consola(srv);
+//                 break;
+//             case 2:
+//                 remove_rochie_consola(srv);
+//                 break;
+//             case 3:
+//                 update_rochie_consola(srv);
+//                 break;
+//             case 4:
+//                 afis_rochii_consola(srv);
+//                 break;
+//             case 0:
+//                 return;
+//             default:
+//                 cout << "Optiune invalida. Incearca din nou\n";
+//         }
+//     }
+// }

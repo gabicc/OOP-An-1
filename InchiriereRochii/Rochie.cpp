@@ -28,7 +28,7 @@ bool Rochie::get_disponibil() {
     return this->disponibil;
 }
 
-void Rochie::operator=(const Rochie &other) {
+void Rochie::operator=(const Rochie& other) {
     this->cod = other.cod;
     this->denumire = other.denumire;
     this->marime = other.marime;

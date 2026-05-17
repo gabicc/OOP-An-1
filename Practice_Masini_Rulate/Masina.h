@@ -31,6 +31,12 @@ public:
         double getKm() const {
                 return this->kilometri;
         }
+        void operator=(const Masina& m) {
+                this->nrMatricol = m.getNrMatricol();
+                this->model = m.getModel();
+                this->culoare = m.getCuloare();
+                this->kilometri = m.getKm();
+        }
 };
 
 
