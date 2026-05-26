@@ -49,9 +49,9 @@ void InchiriereGUI::initializeGUIComponents() {
     listWidgetMasini = new QListWidget;
     lyRight3->addWidget(listWidgetMasini);
 
-    int noLines = 10;
-    int noColumns = 4;
-    this->tableMasini = new QTableWidget{noLines, noColumns};
+    //int noLines = 10;
+    //int noColumns = 4;
+    //this->tableMasini = new QTableWidget{noLines, noColumns};
 
     QVBoxLayout *lyRadioBox = new QVBoxLayout;
     this->groupBox->setLayout(lyRadioBox);
@@ -80,12 +80,14 @@ void InchiriereGUI::initializeGUIComponents() {
     lyFormRandom->addRow(spinBoxRandomMasini, btnGenerareRandomMasini);
     lyLeft->addWidget(formRandom);
 
+    // Crezi modelul și view-ul
+    modelMasini = new MasinaTableModel(this);
+    tableMasini = new QTableView;
+    tableMasini->setModel(modelMasini);
 
-    QStringList tblHeaderList;
-    tblHeaderList << "Nr Inmatriculare" << "Producator" << "Model" << "Tip";
-    this->tableMasini->setHorizontalHeaderLabels(tblHeaderList);
-
-    this->tableMasini->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    // Setează dimensiunile coloanelor
+    tableMasini->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    tableMasini->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     lyRight->addWidget(tableMasini);
 
@@ -109,27 +111,7 @@ void InchiriereGUI::initializeGUIComponents() {
 }
 
 void InchiriereGUI::reloadMasiniList(vector<Masina> masini) {
-    //this->cosCRUDgui->notify(masini);
-    //this->cosReadOnly->notify(masini);
-    this->notifyObservers(masini);
-    this->tableMasini->clearContents();
-    this->tableMasini->setRowCount(masini.size());
-    this->listWidgetMasini->clear();
-
-    int lineNumber = 0;
-    for (auto &masina: masini) {
-        this->tableMasini->setItem(lineNumber, 0,
-                                   new QTableWidgetItem(QString::fromStdString(masina.get_nr_inmatriculare())));
-        this->tableMasini->setItem(lineNumber, 1,
-                                   new QTableWidgetItem(QString::fromStdString(masina.get_producator())));
-        this->tableMasini->setItem(lineNumber, 2, new QTableWidgetItem(QString::fromStdString(masina.get_model())));
-        this->tableMasini->setItem(lineNumber, 3, new QTableWidgetItem(QString::fromStdString(masina.get_tip())));
-        this->listWidgetMasini->addItem(QString::fromStdString(masina.get_nr_inmatriculare() + " - " +
-                                                              masina.get_producator() + " - " +
-                                                              masina.get_model() + " - " +
-                                                              masina.get_tip()));
-        lineNumber++;
-    }
+    modelMasini->updateMasini(masini);
 }
 
 void InchiriereGUI::connectSignalsSlots() {
@@ -222,11 +204,16 @@ void InchiriereGUI::guiAddMasina() {
 }
 
 void InchiriereGUI::guiModificaMasina() {
-    int selectedRow = this->tableMasini->currentRow();
-    if (selectedRow >= 0) {
-        QString nrInmatricVechi = this->tableMasini->item(selectedRow, 0)->text();
-        QString nrInmatricNou = editNrInmatric->text();
+    QModelIndexList selected = this->tableMasini->selectionModel()->selectedRows();
+
+    if (!selected.isEmpty()) {
+        int selectedRow = selected.first().row();
+
         try {
+            Masina masina = modelMasini->getMasina(selectedRow);
+            QString nrInmatricVechi = QString::fromStdString(masina.get_nr_inmatriculare());
+            QString nrInmatricNou = editNrInmatric->text();
+
             editNrInmatric->clear();
             editProducator->clear();
             editModel->clear();
@@ -234,7 +221,6 @@ void InchiriereGUI::guiModificaMasina() {
 
             this->srv.modificaMasina_srv(nrInmatricVechi.toStdString(), nrInmatricNou.toStdString());
             this->reloadMasiniList(srv.get_all_srv());
-            //QMessageBox::information(this, "Info", QString::fromStdString("Masina modificata cu succes"));
         } catch (RepoException &re) {
             QMessageBox::warning(this, "Info", QString::fromStdString(re.getErrorMessage()));
         }
@@ -244,15 +230,19 @@ void InchiriereGUI::guiModificaMasina() {
 }
 
 void InchiriereGUI::guiRemoveMasina() {
-    int selectedRow = this->tableMasini->currentRow();
-    if (selectedRow >= 0) {
-        QString nrInmatric = this->tableMasini->item(selectedRow, 0)->text();
-        QString producator = this->tableMasini->item(selectedRow, 1)->text();
+    QModelIndexList selected = this->tableMasini->selectionModel()->selectedRows();
+
+    if (!selected.isEmpty()) {
+        int selectedRow = selected.first().row();
+
         try {
+            Masina masina = modelMasini->getMasina(selectedRow);
+            QString nrInmatric = QString::fromStdString(masina.get_nr_inmatriculare());
+            QString producator = QString::fromStdString(masina.get_producator());
+
             this->srv.stergeMasina_srv(nrInmatric.toStdString());
             this->reloadMasiniList(srv.get_all_srv());
-            //QPushButton* btnMasina = new QPushButton(producator);
-            int cont = 0;
+
             for (auto it = butoaneDinamice.begin(); it != butoaneDinamice.end(); it++) {
                 if ((*it)->text() == producator) {
                     if (are_producator(producator.toStdString()) == false) {
@@ -263,8 +253,6 @@ void InchiriereGUI::guiRemoveMasina() {
                     }
                 }
             }
-            //butoaneDinamice.push_back(btnMasina);
-            //QMessageBox::information(this, "Info", QString::fromStdString("Masina stearsa cu succes"));
         } catch (RepoException &re) {
             QMessageBox::warning(this, "Info", QString::fromStdString(re.getErrorMessage()));
         }
@@ -274,13 +262,17 @@ void InchiriereGUI::guiRemoveMasina() {
 }
 
 void InchiriereGUI::guiFilterMasiniProducator() {
-    int selectedRow = this->tableMasini->currentRow();
-    if (selectedRow >= 0) {
-        QString producator = this->tableMasini->item(selectedRow, 1)->text();
+    QModelIndexList selected = this->tableMasini->selectionModel()->selectedRows();
+
+    if (!selected.isEmpty()) {
+        int selectedRow = selected.first().row();
+
         try {
+            Masina masina = modelMasini->getMasina(selectedRow);
+            QString producator = QString::fromStdString(masina.get_producator());
+
             vector<Masina> newMasini = this->srv.filtreaza_dupa_producator_srv(producator.toStdString());
             this->reloadMasiniList(newMasini);
-            //QMessageBox::information(this, "Info", QString::fromStdString("Masini filtrate dupa producator"));
         } catch (RepoException &re) {
             QMessageBox::warning(this, "Info", QString::fromStdString(re.getErrorMessage()));
         }
@@ -291,13 +283,17 @@ void InchiriereGUI::guiFilterMasiniProducator() {
 }
 
 void InchiriereGUI::guiFilterMasiniTip() {
-    int selectedRow = this->tableMasini->currentRow();
-    if (selectedRow >= 0) {
-        QString tip = this->tableMasini->item(selectedRow, 3)->text();
+    QModelIndexList selected = this->tableMasini->selectionModel()->selectedRows();
+
+    if (!selected.isEmpty()) {
+        int selectedRow = selected.first().row();
+
         try {
+            Masina masina = modelMasini->getMasina(selectedRow);
+            QString tip = QString::fromStdString(masina.get_tip());
+
             vector<Masina> newMasini = this->srv.filtreaza_dupa_tip_srv(tip.toStdString());
             this->reloadMasiniList(newMasini);
-            //QMessageBox::information(this, "Info", QString::fromStdString("Masini filtrate dupa producator"));
         } catch (RepoException &re) {
             QMessageBox::warning(this, "Info", QString::fromStdString(re.getErrorMessage()));
         }

@@ -26,6 +26,7 @@
 #include "CosCRUDGUI.h"
 #include "CosReadOnlyGUI.h"
 #include "Subject.h"
+#include "MasinaTableModel.h"
 
 using namespace std;
 
@@ -70,8 +71,11 @@ private:
 
     QPushButton* btnSortMasini;
 
-    QTableWidget* tableMasini;
-    QListWidget* listWidgetMasini;
+    //QTableWidget* tableMasini;
+    QTableView* tableMasini;
+    MasinaTableModel* modelMasini;
+    //QListWidget* listWidgetMasini;
+    QListView* listWidgetMasini;
 
     void initializeGUIComponents();
 
