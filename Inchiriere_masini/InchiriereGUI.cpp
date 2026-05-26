@@ -4,6 +4,9 @@
 
 #include "InchiriereGUI.h"
 
+#include "CosCRUDGUI.h"
+#include "CosReadOnlyGUI.h"
+
 void InchiriereGUI::initializeGUIComponents() {
     QHBoxLayout *lyMain = new QHBoxLayout;
     this->setLayout(lyMain);
@@ -64,6 +67,7 @@ void InchiriereGUI::initializeGUIComponents() {
 
     btnUndo = new QPushButton("Undo");
     lyLeft->addWidget(btnUndo);
+    lyLeft->addWidget(btnDeschidereCosReadOnly);
 
     QWidget *formRandom = new QWidget;
     QFormLayout *lyFormRandom = new QFormLayout;
@@ -105,6 +109,9 @@ void InchiriereGUI::initializeGUIComponents() {
 }
 
 void InchiriereGUI::reloadMasiniList(vector<Masina> masini) {
+    //this->cosCRUDgui->notify(masini);
+    //this->cosReadOnly->notify(masini);
+    this->notifyObservers(masini);
     this->tableMasini->clearContents();
     this->tableMasini->setRowCount(masini.size());
     this->listWidgetMasini->clear();
@@ -141,6 +148,17 @@ void InchiriereGUI::connectSignalsSlots() {
     QObject::connect(btnUndo, &QPushButton::clicked, this, &InchiriereGUI::guiUndo);
 
     QObject::connect(btnGenerareRandomMasini, &QPushButton::clicked, this, &InchiriereGUI::guiGenerareRandomMasini);
+
+    QObject::connect(btnDeschidereCosReadOnly, &QPushButton::clicked, this, &InchiriereGUI::guiDeschidereCosReadOnly);
+}
+
+void InchiriereGUI::guiDeschidereCosReadOnly() {
+    CosCRUDGUI* cosCRUDgui = new CosCRUDGUI(srv, this);
+    CosReadOnlyGUI* cosReadOnly = new CosReadOnlyGUI;
+    this->registerObserver(cosCRUDgui);
+    this->registerObserver(cosReadOnly);
+    cosCRUDgui->show();
+    cosReadOnly->show();
 }
 
 void InchiriereGUI::guiGenerareRandomMasini() {
@@ -160,6 +178,7 @@ void InchiriereGUI::guiGenerareRandomMasini() {
         }
     }
     this->reloadMasiniList(srv.get_all_srv());
+
 }
 
 bool InchiriereGUI::are_producator(string producator) {

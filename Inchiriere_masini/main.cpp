@@ -16,6 +16,7 @@
 
 #include "InchiriereGUI.h"
 #include "RepoMasiniMap.h"
+#include "CosCRUDGUI.h"
 
 
 class MasiniWindow :  public QWidget {
@@ -49,6 +50,7 @@ int main(int argc, char** argv)
     Service srv(repo);
     auto win = new InchiriereGUI(srv);
     //auto wim = new MasiniWindow();
+    win->move(0, 0);
     win->show();
 
     return app.exec();

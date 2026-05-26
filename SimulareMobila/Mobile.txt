@@ -1,0 +1,7 @@
+1,bed,10,120
+2,nightstand,5,200
+3,table,15,80
+4,wardrobe,20,50
+5,wardrobe,8,150
+6,nightstand,12,100
+7,bed,10,90

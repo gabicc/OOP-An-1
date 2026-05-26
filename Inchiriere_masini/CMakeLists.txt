@@ -75,6 +75,14 @@ set(PROJECT_SOURCES
         RepoMasiniMap.h
         InchiriereGUI.cpp
         InchiriereGUI.h
+        CosReadOnlyGUI.cpp
+        CosReadOnlyGUI.h
+        CosCRUDGUI.cpp
+        CosCRUDGUI.h
+        Observer.cpp
+        Observer.h
+        Subject.cpp
+        Subject.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -23,10 +23,13 @@
 #include <QMessageBox>
 #include <QSpinBox>
 #include <QListWidget>
+#include "CosCRUDGUI.h"
+#include "CosReadOnlyGUI.h"
+#include "Subject.h"
 
 using namespace std;
 
-class InchiriereGUI: public QWidget {
+class InchiriereGUI: public QWidget, public Subject{
 private:
     Service& srv;
 
@@ -34,6 +37,9 @@ private:
     QLabel* lblProducator = new QLabel{"Producator: "};
     QLabel* lblModel = new QLabel{"Model: "};
     QLabel* lblTip = new QLabel{"Tip: "};
+
+    // CosCRUDGUI* cosCRUDgui= new CosCRUDGUI();
+    // CosReadOnlyGUI* cosReadOnly = new CosReadOnlyGUI();
 
     QLineEdit* editNrInmatric;
     QLineEdit* editProducator;
@@ -47,6 +53,7 @@ private:
     QPushButton* btnFilterMasiniTip;
     QPushButton* btnGenerareRandomMasini;
     QPushButton* btnUndo;
+    QPushButton* btnDeschidereCosReadOnly = new QPushButton("Deschidere Cos");
     QSpinBox* spinBoxRandomMasini;
 
     QVBoxLayout *lyRightRight;
@@ -69,13 +76,20 @@ private:
     void initializeGUIComponents();
 
     void connectSignalsSlots();
-    void reloadMasiniList(vector<Masina> masini);
+
+    //vector<Observer* > notifiableList;
 public:
     InchiriereGUI(Service& srv): srv{srv} {
         initializeGUIComponents();
         connectSignalsSlots();
+        //notifiableList.push_back(cosCRUDgui);
+        //notifiableList.push_back(cosReadOnly);
+        // this->registerObserver(cosCRUDgui);
+        // this->registerObserver(cosReadOnly);
         reloadMasiniList(srv.get_all_srv());
+
     }
+    void reloadMasiniList(vector<Masina> masini);
     void guiAddMasina();
     void guiModificaMasina();
     void guiRemoveMasina();
@@ -84,6 +98,7 @@ public:
     void guiGenerareRandomMasini();
     void guiSortMasini();
     void guiUndo();
+    void guiDeschidereCosReadOnly();
 
 };
 
