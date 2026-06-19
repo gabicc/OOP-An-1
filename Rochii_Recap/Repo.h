@@ -1,19 +1,22 @@
 //
-// Created by gabi on 5/12/26.
+// Created by gabi on 6/13/26.
 //
 
-#ifndef INCHIRIEREROCHII_REPO_H
-#define INCHIRIEREROCHII_REPO_H
-
-#include "Rochie.h"
+#ifndef ROCHII_RECAP_REPO_H
+#define ROCHII_RECAP_REPO_H
+#include <exception>
+#include <string>
 #include <vector>
-#include <iostream>
+#include "Rochie.h"
 #include <fstream>
 #include <sstream>
+#include <bits/atomic_base.h>
 
 using namespace std;
 
-class RepoException:public exception {
+using namespace std;
+
+class RepoException: public std::exception {
 private:
     string errorMsg;
 public:
@@ -29,30 +32,27 @@ private:
     string filename;
     void loadFromFile(string filename) {
         ifstream fin(filename);
-        if (!fin.is_open()) {
+        if (!fin.is_open())
             throw RepoException("Could not open file");
-        }
         string line;
         while (!fin.eof()) {
             getline(fin, line);
             if (line.empty())
                 continue;
             stringstream sStream(line);
-            string cod, denumire, marime, pret, disponibil;
-
+            string cod, denumire, marime, pret, disponibila;
             getline(sStream, cod, ',');
             getline(sStream, denumire, ',');
             getline(sStream, marime, ',');
             getline(sStream, pret, ',');
-            getline(sStream, disponibil, ',');
-
-            if (disponibil == "False") {
-                Rochie r(stoi(cod), denumire, stod(marime), stod(pret), false);
-                addRochie(r);
+            getline(sStream, disponibila, ',');
+            if (disponibila == "false") {
+                Rochie r(stoi(cod), denumire, stoi(marime), stod(pret), false);
+                rochii.push_back(r);
             }
             else {
-                Rochie r(stoi(cod), denumire, stod(marime), stod(pret), true);
-                addRochie(r);
+                Rochie r(stoi(cod), denumire, stoi(marime), stod(pret), true);
+                rochii.push_back(r);
             }
         }
     }
@@ -60,15 +60,18 @@ public:
     Repo(string filename): filename{filename} {
         loadFromFile(filename);
     }
-    ~Repo();
+    virtual ~Repo() {
+
+    };
     void addRochie(Rochie r);
     void removeRochie(int cod);
-    void updateRochie(int cod, Rochie r_nou);
-    void afisRochii();
-    vector<Rochie> get_all_repo() {
-        return this->rochii;
-    }
+    bool findRochie(int cod);
+    void updateRochie(Rochie r_nou);
+    vector<Rochie> get_all_rochii_repo();
 };
+#include <semaphore.h>
+int sem_init(sem_t *sem, int pshared, unsigned int value);
 
 
-#endif //INCHIRIEREROCHII_REPO_H
+
+#endif //ROCHII_RECAP_REPO_H

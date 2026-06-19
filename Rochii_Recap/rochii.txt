@@ -1,0 +1,10 @@
+1,A,12,120,true
+2,B,10,100,false
+3,C,8,80,true
+4,D,15,150,false
+5,E,20,200,true
+6,F,18,180,false
+7,G,25,250,true
+8,H,30,300,false
+9,I,22,220,true
+10,J,28,280,false

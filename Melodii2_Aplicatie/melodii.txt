@@ -1,0 +1,10 @@
+1,A,B,pop
+2,B,C,rock
+3,C,D,folk
+4,D,E,disco
+5,E,F,disco
+6,F,G,rock
+7,G,H,pop
+8,H,I,folk
+9,I,J,rock
+10,J,K,disco

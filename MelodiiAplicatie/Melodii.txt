@@ -1,0 +1,10 @@
+3, Watermelon Sugar, Harry Styles,8
+17, Rolling in the Deep, Adele,9
+24, Uptown Funk, Mark Ronson ft. Bruno Mars,8
+36,AAAAAAA, AC/DC,10
+51, Lose Yourself, Eminem,10
+67, Hey Jude, The Beatles,10
+73, BBBB, Taylor Swift,5
+81, Royals, Lorde,8
+99, Wonderwall, Oasis,9
+100, Blinding Lights, The Weeknd,10
