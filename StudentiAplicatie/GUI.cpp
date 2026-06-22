@@ -156,6 +156,7 @@ QVariant StudentsTableModel::data(const QModelIndex &index, int role ) const {
         }
     }
     return QVariant();
+
 }
 QVariant StudentsTableModel::headerData(int section, Qt::Orientation orientation, int role ) const {
     // post: incarcam header-urile de la tabel

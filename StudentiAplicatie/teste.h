@@ -88,6 +88,7 @@ void test_service() {
     assert(all[9].getNrMatricol() == 8);
 }
 
+
 void test_all() {
     test_domain();
     test_repo();

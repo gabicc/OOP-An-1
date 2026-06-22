@@ -31,6 +31,7 @@ using namespace std;
 class StudentsTableModel: public QAbstractTableModel {
 private:
     vector<Student> studenti;
+
 public:
     StudentsTableModel(QObject* parent, vector<Student> studs): QAbstractTableModel{parent}, studenti{studs} {};
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;

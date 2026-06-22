@@ -123,6 +123,7 @@ public:
         while (i < rez.size()) {
             studenti.push_back(rez[i]);
             i++;
+
         }
     }
     void redo() {
