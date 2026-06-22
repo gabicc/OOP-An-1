@@ -141,7 +141,6 @@ QVariant MelodieTableModel::data(const QModelIndex &index, int role) const {
     switch (role) {
         case Qt::DisplayRole: {
             Melodie a = melodii[row];
-            int id = a.getId();
             int x = 0;
             for (Melodie m: melodii) {
                 if (m.getRank() == a.getRank())

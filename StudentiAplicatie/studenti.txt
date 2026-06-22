@@ -1,0 +1,10 @@
+1,A,18,mate
+2,B,19,info
+3,C,18,mate-info
+4,D,20,ai
+5,E,13,mate
+6,F,18,mate
+7,G,21,info
+8,H,22,mate-info
+9,I,20,ai
+10,J,21,mate-info

@@ -18,24 +18,40 @@
 #include <QPushButton>
 #include <QMessageBox>
 #include <QAbstractTableModel>
+#include <QAbstractListModel>
+
+class BarChart: public QWidget {
+    Q_OBJECT;
+private:
+    vector<Melodie> melodii;
+public:
+    explicit BarChart(QWidget* parent = nullptr): QWidget(parent) {};
+    void setMelodii(const vector<Melodie>& m) {
+        melodii = m;
+        update();
+    }
+protected:
+    void paintEvent(QPaintEvent *event) override;
+};
 
 class MelodieTableModel: public QAbstractTableModel {
     Q_OBJECT;
 private:
     vector<Melodie> melodii;
 public:
-    MelodieTableModel(QObject* parent, vector<Melodie> melodiii): QAbstractTableModel{parent}, melodii{melodiii} {};
+    MelodieTableModel(QObject* parent, vector<Melodie> melodii): QAbstractTableModel{parent}, melodii{melodii} {};
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    QVariant headerData(int section, Qt::Orientation orientation, int role=Qt::DisplayRole) const override;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+
 };
 
 class GUI: public QWidget {
     Q_OBJECT;
 private:
     Service& srv;
-    QTableWidget* tblMelodii = new QTableWidget;
+    QTableWidget* tblMelodii = new QTableWidget(10, 4);
     QTableView* tblViewMelodii = new QTableView;
     QLabel* lblTitlu = new QLabel("Titlu");
     QLabel* lblArtist = new QLabel("Artist");

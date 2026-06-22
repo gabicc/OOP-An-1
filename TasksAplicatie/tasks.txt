@@ -1,0 +1,10 @@
+1,A,a,b,c,d,open
+2,B,b,c,d,e,inprogress
+3,C,b,d,e,f,closed
+4,D,q,e,r,inprogress
+5,E,a,f,open
+6,F,s,f,g,h,inprogress
+7,G,p,i,u,open
+8,H,a,s,e,inprogress
+9,I,r,q,y,u,closed
+10,J,q,e,open

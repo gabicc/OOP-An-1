@@ -28,6 +28,9 @@ public:
     }
     void addMelodie_srv(string titlu, string artist, string gen);
     void removeMelodie_srv(int id);
+    void saveToFile_srv() {
+        repo.saveToFile();
+    }
 };
 
 
